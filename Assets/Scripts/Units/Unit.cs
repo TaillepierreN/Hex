@@ -1,3 +1,4 @@
+using Hex.Tools;
 using UnityEngine;
 
 namespace Hex.Units
@@ -15,9 +16,9 @@ namespace Hex.Units
                 Vector3 moveDirection = (targetPosition - transform.position).normalized;
                 transform.position += moveDirection * moveSpeed * Time.deltaTime;
             }
-            if (Input.GetKeyDown(KeyCode.T))
+            if (Input.GetMouseButtonDown(0))
             {
-                Move(new Vector3(4, 0, 4));
+                Move(MousePosition.GetPosition());
             }
         }
         private void Move(Vector3 targetPosition)
