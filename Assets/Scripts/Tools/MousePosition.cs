@@ -1,3 +1,4 @@
+using Hex.Grid;
 using UnityEngine;
 
 namespace Hex.Tools
