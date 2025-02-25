@@ -1,3 +1,4 @@
+using Hex.Grid;
 using Hex.Tools;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ namespace Hex.Units
         [SerializeField] private Animator _unitAnimator;
 
         private Vector3 _targetPosition;
+        private GridPosition _gridPosition;
         private float _moveSpeed = 4f;
         private float _rotateSpeed = 10f;
         private float _stoppingDistance = .1f;
@@ -16,6 +18,12 @@ namespace Hex.Units
         private void Awake()
         {
             _targetPosition = transform.position;
+        }
+
+        private void Start()
+        {
+            _gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+            LevelGrid.Instance.AddUnitAtGridPosition(_gridPosition, this);
         }
         private void Update()
         {
@@ -30,10 +38,18 @@ namespace Hex.Units
             {
                 _unitAnimator.SetBool("isWalking", false);
             }
+            GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+            if(newGridPosition != _gridPosition)
+            {
+                LevelGrid.Instance.UnitMovedGridPosition(_gridPosition, newGridPosition, this);
+                _gridPosition = newGridPosition;
+            }
+
         }
         public void Move(Vector3 targetPosition)
         {
             this._targetPosition = targetPosition;
         }
+
     }
 }

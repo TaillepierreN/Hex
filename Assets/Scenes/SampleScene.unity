@@ -531,6 +531,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &884470763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 884470765}
+  - component: {fileID: 884470764}
+  m_Layer: 0
+  m_Name: LevelGrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &884470764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884470763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f7fc509a4c31d4bb8134640e77753d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridX: 10
+  gridZ: 10
+  _gridDebugObjectPrefab: {fileID: 6735946958214751679, guid: 6131d9dd2347de84d900feceb6a7db94, type: 3}
+--- !u!4 &884470765
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884470763}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 59.479046, y: 31.933609, z: -86.80145}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1452567644
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,8 +607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b38ce9f32edbb0846a02d6535201e311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridX: 10
-  gridY: 10
 --- !u!4 &1452567646
 Transform:
   m_ObjectHideFlags: 0
@@ -901,3 +946,4 @@ SceneRoots:
   - {fileID: 806356329}
   - {fileID: 711838404}
   - {fileID: 1452567646}
+  - {fileID: 884470765}
