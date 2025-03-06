@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Hex.Units;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Hex.Grid
@@ -7,16 +10,68 @@ namespace Hex.Grid
     /// </summary>
     public class GridSystemVisual : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public static GridSystemVisual Instance { get; private set; }
+
+        [SerializeField] private Transform _gridSystemVisualSinglePrefab;
+
+        private GridSystemVisualSingle[,] _gridSystemVisualSingleArray;
+
+
+        private void Awake()
+        {
+            if (Instance != null)
+            {
+                Debug.LogError("There is more than one GridSystemVisual in the scene " + transform + " - " + Instance);
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+        }
         void Start()
         {
-
+            _gridSystemVisualSingleArray = new GridSystemVisualSingle[LevelGrid.Instance.GetWidth(), LevelGrid.Instance.GetHeight()];
+            for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++)
+            {
+                for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++)
+                {
+                    GridPosition gridPosition = new GridPosition(x, z);
+                    Transform gridSystemSingleTransform = Instantiate(_gridSystemVisualSinglePrefab, LevelGrid.Instance.GetWorldPosition(gridPosition), Quaternion.identity);
+                    _gridSystemVisualSingleArray[x, z] = gridSystemSingleTransform.GetComponent<GridSystemVisualSingle>();
+                }
+            }
+            HideAllGridPosition();
         }
 
-        // Update is called once per frame
+        public void HideAllGridPosition()
+        {
+            for (int x = 0; x < LevelGrid.Instance.GetWidth(); x++)
+            {
+                for (int z = 0; z < LevelGrid.Instance.GetHeight(); z++)
+                {
+                    _gridSystemVisualSingleArray[x, z].Hide();
+                }
+            }
+        }
+
+
+        public void ShowGridPositionList(List<GridPosition> gridPositionList)
+        {
+            foreach (GridPosition gridPosition in gridPositionList)
+            {
+                _gridSystemVisualSingleArray[gridPosition.x, gridPosition.z].Show();
+            }
+        }
+
+        private void UpdateGridVisual()
+        {
+            HideAllGridPosition();
+            Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
+            ShowGridPositionList(selectedUnit.GetMoveAction().GetValidGridPositionList());
+        }
+
         void Update()
         {
-
+            UpdateGridVisual();
         }
     }
 }

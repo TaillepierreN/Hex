@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Hex.Grid;
 using Hex.Tools;
 using UnityEngine;
@@ -15,7 +16,8 @@ public class Debugger : MonoBehaviour
 	{
 		if (Input.GetKeyDown(KeyCode.T))
 		{
-			unit.GetMoveAction().GetValidGridPositionList();
+			GridSystemVisual.Instance.HideAllGridPosition();
+			GridSystemVisual.Instance.ShowGridPositionList(unit.GetMoveAction().GetValidGridPositionList());
 		}
 	}
 }

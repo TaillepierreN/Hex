@@ -84,5 +84,15 @@ namespace Hex.Grid
 					gridPosition.z < _height;
 		}
 
+		public int GetWidth()
+		{
+			return _width;
+		}
+
+		public int GetHeight()
+		{
+			return _height;
+		}
+
 	}
 }

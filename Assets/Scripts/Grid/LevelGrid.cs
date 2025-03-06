@@ -50,6 +50,8 @@ namespace Hex.Grid
         public GridPosition GetGridPosition(Vector3 worldPosition) => _gridSystem.GetGridPosition(worldPosition);
         public bool IsValidGridPosition(GridPosition gridPosition) => _gridSystem.isValidGridPosition(gridPosition);
         public Vector3 GetWorldPosition(GridPosition gridPosition) => _gridSystem.GetWorldPosition(gridPosition);
+        public int GetWidth() => _gridSystem.GetWidth();
+        public int GetHeight() => _gridSystem.GetHeight();
 
         public bool HasAnyUnitOnGridPosition(GridPosition gridPosition)
         {
