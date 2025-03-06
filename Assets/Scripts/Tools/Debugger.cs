@@ -5,6 +5,7 @@ using UnityEngine;
 public class Debugger : MonoBehaviour
 {
 
+	[SerializeField] private Unit unit;
     void Start()
     {
 
@@ -12,6 +13,9 @@ public class Debugger : MonoBehaviour
 
 	private void Update()
 	{
-
+		if (Input.GetKeyDown(KeyCode.T))
+		{
+			unit.GetMoveAction().GetValidGridPositionList();
+		}
 	}
 }

@@ -1,6 +1,7 @@
 using Hex.Tools;
 using UnityEngine;
 using System;
+using Hex.Grid;
 
 namespace Hex.Units
 {
@@ -29,7 +30,10 @@ namespace Hex.Units
             if (Input.GetMouseButtonDown(0))
             {
                 if (TryHandleUnitSelection()) return;
-                _selectedUnit.Move(MousePosition.GetPosition());
+
+                GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MousePosition.GetPosition());
+                if(_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+                _selectedUnit.GetMoveAction().Move(mouseGridPosition);
             }
         }
 

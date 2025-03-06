@@ -76,5 +76,13 @@ namespace Hex.Grid
 			return _gridObjectArray[gridPosition.x, gridPosition.z];
 		}
 
+		public bool isValidGridPosition(GridPosition gridPosition)
+		{
+			return gridPosition.x >= 0 &&
+					gridPosition.x < _width &&
+					gridPosition.z >= 0 &&
+					gridPosition.z < _height;
+		}
+
 	}
 }
