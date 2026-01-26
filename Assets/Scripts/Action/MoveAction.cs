@@ -2,13 +2,11 @@ using System.Collections.Generic;
 using Hex.Grid;
 using UnityEngine;
 
-public class MoveAction : MonoBehaviour
+public class MoveAction : BaseAction
 {
     [SerializeField] private Animator _unitAnimator;
     [SerializeField] private int maxMoveDistance = 5;
     private Vector3 _targetPosition;
-    private Unit _unit;
-    private bool _isActive;
 
     /// <summary>
     /// The speed at which the unit moves.
@@ -26,9 +24,9 @@ public class MoveAction : MonoBehaviour
     private float _stoppingDistance = .1f;
 
 
-    private void Awake()
+    protected override void Awake()
     {
-        _unit = GetComponent<Unit>();
+        base.Awake();
         _targetPosition = transform.position;
     }
     void Update()

@@ -1,11 +1,9 @@
 using UnityEngine;
 
-public class SpinAction : MonoBehaviour
+public class SpinAction : BaseAction
 {
 
     private float _totalSpinAmount;
-    private bool _isActive;
-
 
     private void Update()
     {
