@@ -8,6 +8,7 @@ public class MoveAction : MonoBehaviour
     [SerializeField] private int maxMoveDistance = 5;
     private Vector3 _targetPosition;
     private Unit _unit;
+    private bool _isActive;
 
     /// <summary>
     /// The speed at which the unit moves.
@@ -32,26 +33,31 @@ public class MoveAction : MonoBehaviour
     }
     void Update()
     {
+        if (!_isActive)
+            return;
+
+        Vector3 moveDirection = (_targetPosition - transform.position).normalized;
         if (Vector3.Distance(transform.position, _targetPosition) > _stoppingDistance)
         {
-            Vector3 moveDirection = (_targetPosition - transform.position).normalized;
             transform.position += moveDirection * _moveSpeed * Time.deltaTime;
-            transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * _rotateSpeed);
             _unitAnimator.SetBool("isWalking", true);
         }
         else
         {
             _unitAnimator.SetBool("isWalking", false);
+            _isActive = false;
         }
+        transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * _rotateSpeed);
     }
 
-        /// <summary>
+    /// <summary>
     /// Moves the unit to the specified target position.
     /// </summary>
     /// <param name="targetPosition">The target position to move the unit to.</param>
     public void Move(GridPosition gridPosition)
     {
         this._targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
+        _isActive = true;
     }
 
     public bool IsValidActionGridPosition(GridPosition gridPosition)

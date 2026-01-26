@@ -7,7 +7,7 @@ namespace Hex.Units
 {
     public class UnitActionSystem : MonoBehaviour
     {
-        public static UnitActionSystem Instance { get; private set;}
+        public static UnitActionSystem Instance { get; private set; }
         [SerializeField] private Unit _selectedUnit;
         [SerializeField] private LayerMask _unitLayerMask;
 
@@ -32,8 +32,13 @@ namespace Hex.Units
                 if (TryHandleUnitSelection()) return;
 
                 GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MousePosition.GetPosition());
-                if(_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
-                _selectedUnit.GetMoveAction().Move(mouseGridPosition);
+                if (_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
+                    _selectedUnit.GetMoveAction().Move(mouseGridPosition);
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                _selectedUnit.GetSpinAction().Spin();
             }
         }
 
@@ -41,17 +46,17 @@ namespace Hex.Units
         private bool TryHandleUnitSelection()
         {
 
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                if(Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _unitLayerMask))
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hit, float.MaxValue, _unitLayerMask))
+            {
+                if (hit.transform.TryGetComponent<Unit>(out Unit unit))
                 {
-                    if(hit.transform.TryGetComponent<Unit>(out Unit unit))
-                    {
-                        SetSelectedUnit(unit);
-                        return true;
-                    }
+                    SetSelectedUnit(unit);
+                    return true;
                 }
-                return false;
-            
+            }
+            return false;
+
         }
 
         private void SetSelectedUnit(Unit unit)
@@ -59,7 +64,7 @@ namespace Hex.Units
             _selectedUnit = unit;
             OnSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
         }
-        
+
         public Unit GetSelectedUnit()
         {
             return _selectedUnit;
