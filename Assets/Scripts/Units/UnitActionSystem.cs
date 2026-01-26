@@ -10,7 +10,7 @@ namespace Hex.Units
         public static UnitActionSystem Instance { get; private set; }
         [SerializeField] private Unit _selectedUnit;
         [SerializeField] private LayerMask _unitLayerMask;
-
+        private bool _isBusy;
         public event EventHandler OnSelectedUnitChanged;
 
 
@@ -27,22 +27,38 @@ namespace Hex.Units
 
         private void Update()
         {
+            if (_isBusy)
+                return;
+
             if (Input.GetMouseButtonDown(0))
             {
                 if (TryHandleUnitSelection()) return;
 
                 GridPosition mouseGridPosition = LevelGrid.Instance.GetGridPosition(MousePosition.GetPosition());
                 if (_selectedUnit.GetMoveAction().IsValidActionGridPosition(mouseGridPosition))
-                    _selectedUnit.GetMoveAction().Move(mouseGridPosition);
+                {
+                    SetBusy();
+                    _selectedUnit.GetMoveAction().Move(mouseGridPosition, ClearBusy);
+                }
             }
 
             if (Input.GetMouseButtonDown(1))
             {
-                _selectedUnit.GetSpinAction().Spin();
+                SetBusy();
+                _selectedUnit.GetSpinAction().Spin(ClearBusy);
             }
         }
 
+        private void SetBusy()
+        {
+            _isBusy = true;
+        }
 
+        private void ClearBusy()
+        {
+            _isBusy = false;
+
+        }
         private bool TryHandleUnitSelection()
         {
 

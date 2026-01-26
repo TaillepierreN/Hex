@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Hex.Grid;
 using UnityEngine;
+using System;
 
 public class MoveAction : BaseAction
 {
@@ -44,6 +45,7 @@ public class MoveAction : BaseAction
         {
             _unitAnimator.SetBool("isWalking", false);
             _isActive = false;
+            onActionComplete();
         }
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * _rotateSpeed);
     }
@@ -52,8 +54,9 @@ public class MoveAction : BaseAction
     /// Moves the unit to the specified target position.
     /// </summary>
     /// <param name="targetPosition">The target position to move the unit to.</param>
-    public void Move(GridPosition gridPosition)
+    public void Move(GridPosition gridPosition, Action onActionComplete)
     {
+        this.onActionComplete = onActionComplete;
         this._targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         _isActive = true;
     }
@@ -74,11 +77,11 @@ public class MoveAction : BaseAction
             {
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
-                if(!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition))
                     continue;
-                if(unitGridPosition == testGridPosition)
+                if (unitGridPosition == testGridPosition)
                     continue;
-                if(LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition))
                     continue;
                 validGridPositionList.Add(testGridPosition);
             }

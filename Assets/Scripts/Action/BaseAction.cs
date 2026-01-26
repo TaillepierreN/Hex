@@ -1,9 +1,11 @@
 using UnityEngine;
+using System;
 
 public abstract class BaseAction : MonoBehaviour
 {
     protected Unit _unit;
     protected bool _isActive;
+    protected Action onActionComplete;
 
     protected virtual void Awake()
     {
