@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Hex.Units;
+using System;
 
 namespace Hex.UI
 {
@@ -12,16 +13,27 @@ namespace Hex.UI
 
         void Start()
         {
+            UnitActionSystem.Instance.OnSelectedUnitChanged += UnitActionSystem_OnSelectedUnitChanger;
             CreateUnitActionButtons();
         }
 
         private void CreateUnitActionButtons()
         {
+            foreach (Transform buttonTransform in _actionButtonContainerTransform)
+            {
+                Destroy(buttonTransform.gameObject);
+            }
+            
             Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
             foreach (BaseAction baseAction in selectedUnit.GetBaseActionsArray())
             {
                 Instantiate(_actionButtonPrefab, _actionButtonContainerTransform);
             }
+        }
+
+        private void UnitActionSystem_OnSelectedUnitChanger(object sender, EventArgs e)
+        {
+            CreateUnitActionButtons();
         }
     }
 }
