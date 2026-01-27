@@ -27,4 +27,9 @@ public class SpinAction : BaseAction
         _totalSpinAmount = 0f;
         this.onActionComplete = onActionComplete;
     }
+
+    public override string GetActionName()
+    {
+        return "Spin";
+    }
 }

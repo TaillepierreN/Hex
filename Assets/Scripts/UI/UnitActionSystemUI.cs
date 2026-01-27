@@ -23,11 +23,12 @@ namespace Hex.UI
             {
                 Destroy(buttonTransform.gameObject);
             }
-            
+
             Unit selectedUnit = UnitActionSystem.Instance.GetSelectedUnit();
             foreach (BaseAction baseAction in selectedUnit.GetBaseActionsArray())
             {
-                Instantiate(_actionButtonPrefab, _actionButtonContainerTransform);
+                Transform actionButtonTransform =Instantiate(_actionButtonPrefab, _actionButtonContainerTransform);
+                actionButtonTransform.GetComponent<ActionButtonUi>().SetBaseAction(baseAction);
             }
         }
 
